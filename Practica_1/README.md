@@ -19,21 +19,22 @@ sudo docker run hello-world
 ```
 ![Ver imagen: Hello World](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/hello_world.png?raw=true)
 
-## 3. Reconocimiento de herramientas de red
+## 3. Desarrollo
 ### Prerequisitos
 - Tener la configuracion de red de la maquina virtual en **adaptador puente**.
 - Instalar las herramientas de red  `sudo apt install net-tools`
 - Instalar las herramientas **lsof**  `sudo apt-get install lsof`
 - (Opcional) Instalar el gestor de archivos **gedit** `sudo apt-get install gedit`
 
-### Desarrollo
-1. #### Se identifica la configuración de red por medio del comando:
+### 3.1. Identificar la configuración de red
+Para esto se usan los siguientes comandos
 ```
 ifconfig
 ```
 ![Ver imagen: ifconfig](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/ifconfig.png?raw=true)
 
-2. #### Se Identifican los servicios y puertos ocupados en el sistema mediante los comandos
+### 3.2. Identificar los servicios y puertos ocupados
+Para esto se usan los siguientes comandos
 ```
 ss | grep containerd
 netstat | grep containerd
@@ -41,7 +42,7 @@ lsof | grep containerd
 ```
 ![Ver imagen: de servicios y puertos ocupados](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servicios_puertos.png?raw=true)
 
-3. #### Conexion TCP (Cliente y Servidor en la misma maquina Lubuntu)
+### 3.3. Conexion TCP (Cliente y Servidor en la misma maquina Lubuntu)
 
 Se crea un archivo denominado **server.py**, en este caso el archivo se guarda en el directorio **/Documentos/server**
 ```
@@ -116,7 +117,7 @@ Al ejecutar el comando `lsof -i -P -n` se puede observar que el puerto **10000**
 
 ![Ver imagen: puerto 10000 ocupado](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/puerto_10000.png?raw=true)
 
-4. #### Conexion UDP (Cliente y Servidor en la misma maquina Lubuntu)
+### 3.4. Conexion UDP (Cliente y Servidor en la misma maquina Lubuntu)
 
 Se crea un archivo denominado **server.py**, en este caso el archivo se guarda en el directorio **/Documentos/serverUDP**. Este archivo tendra el siguiente contenido
 ```
@@ -180,7 +181,7 @@ Al ejecutar el comando `lsof -i -P -n` se puede observar que el puerto **10000**
 
 ![Ver imagen: puerto 10000 ocupado](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/puerto_10000UDP.png?raw=true)
 
-5. #### Conexion TCP (Cliente Windows y servidor Lubuntu)
+### 3.5. Conexion TCP (Cliente Windows y servidor Lubuntu)
 
 En este caso el servidor esta en la maquina Lubuntu, por lo tanto  se utiliza el mismo archivo **server.py** del caso de TCP. Por otro lado para el cliente se crea un archivo **cliente.py** en la maquina nativa Windows, en el cual se tiene el siguiente codigo
 ```
@@ -220,7 +221,7 @@ Se ejecuta el archivo **server.py** `python3 server.py` en la maquina Lubuntu y 
 
 ![Ver imagen: conexion TCP desde diferentes maquinas](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/tcpWindows.png?raw=true)
 
-6. #### Conexion UDP (Cliente Windows y servidor Lubuntu)
+### 3.6. Conexion UDP (Cliente Windows y servidor Lubuntu)
 
 En este caso el servidor esta en la maquina Lubuntu, por lo tanto  se utiliza el mismo archivo **server.py** del caso de UDP. Por otro lado para el cliente se crea un archivo **cliente.py** en la maquina nativa Windows, en el cual se tiene el siguiente codigo
 ```
