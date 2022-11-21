@@ -17,7 +17,7 @@ Para probar la correcta instalacioon de docker se hace una pequeña prueba media
 ```
 sudo docker run hello-world
 ```
-[Ver imagen Hello World](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servicios-puertos.png?raw=true)
+[Ver imagen: Hello World](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servicios-puertos.png?raw=true)
 
 ## 3. Reconocimiento de herramientas de red
 ### Prerequisitos
@@ -31,7 +31,7 @@ sudo docker run hello-world
 ```
 ifconfig
 ```
-[Ver imagen ifconfig](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/ifconfig.png?raw=true)
+[Ver imagen: ifconfig](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/ifconfig.png?raw=true)
 
 2. Se Identifican los servicios y puertos ocupados en el sistema mediante los comandos
 ```
@@ -39,18 +39,18 @@ ss | grep containerd
 netstat | grep containerd
 lsof | grep containerd
 ```
-[Ver imagen de servicios y puertos ocupados](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servicios_puertos.png?raw=true)
+[Ver imagen: de servicios y puertos ocupados](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servicios_puertos.png?raw=true)
 
 3. Evaluar scripts en Python
 
-Se crea un archivo denominado **server.py**, en este caso se guarda el archivo en el directorio **/Documentos/server**
+Se crea un archivo denominado **server.py**, en este caso el archivo se guarda en el directorio **/Documentos/server**
 ```
 cd Documentos/
 mkdir server
 cd server/
 touch server.py
 ```
-Dentro de este archivo de escribe el siguiente codigo
+Dentro del archivo **server.py** de escribe el siguiente codigo
 ```
 import socket
 import sys
@@ -80,3 +80,39 @@ while True:
     finally:
         connection.close()
 ```
+Dentro del directorio **/Documentos/server** se crea un nuevo archivo denominado **client.py**, en el cual se tiene el siguiente codigo
+```
+import socket
+import sys
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+server_address = ('0.0.0.0', 10000)
+print("Iniciando cliente...")
+sock.connect(server_address)
+
+try:
+    message = b'Este es un mensaje'
+    print("Enviando {!r}".format(message))
+    sock.sendall(message)
+    
+    amount_rcv = 0
+    amount_exp = len(message)
+    
+    while amount_rcv < amount_exp:
+        data = sock.recv(16)
+        amount_rcv += len(data)
+        print("Recibiendo {!r}".format(data))
+finally:
+   print("Cerrando socket")
+   sock.close()
+```
+
+Dentro del directorio **/Documentos/server** ejecutamos el archivo **server.py** `python3 server.py` y luego el archivo **client.py** `python3 client.py`
+
+[Ver imagen: conexion servidor-cliente](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servidor_cliente.png?raw=true)
+
+Al ejecutar el comando `lsof -i -P -n` se puede observar que el puerto **10000** que se utilizo en la conexion servidor-cliente esta usado.
+
+[Ver imagen: puerto 10000 ocupado](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/puerto_10000.png?raw=true)
+
