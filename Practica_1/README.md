@@ -17,7 +17,7 @@ Para probar la correcta instalacioon de docker se hace una pequeña prueba media
 ```
 sudo docker run hello-world
 ```
-[Ver imagen: Hello World](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servicios-puertos.png?raw=true)
+![Ver imagen: Hello World](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/hello_world.png?raw=true)
 
 ## 3. Reconocimiento de herramientas de red
 ### Prerequisitos
@@ -27,27 +27,27 @@ sudo docker run hello-world
 - (Opcional) Instalar el gestor de archivos **gedit** `sudo apt-get install gedit`
 
 ### Desarrollo
-1. Se identifica la configuración de red por medio del comando:
+1. #### Se identifica la configuración de red por medio del comando:
 ```
 ifconfig
 ```
-[Ver imagen: ifconfig](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/ifconfig.png?raw=true)
+![Ver imagen: ifconfig](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/ifconfig.png?raw=true)
 
-2. Se Identifican los servicios y puertos ocupados en el sistema mediante los comandos
+2. #### Se Identifican los servicios y puertos ocupados en el sistema mediante los comandos
 ```
 ss | grep containerd
 netstat | grep containerd
 lsof | grep containerd
 ```
-[Ver imagen: de servicios y puertos ocupados](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servicios_puertos.png?raw=true)
+![Ver imagen: de servicios y puertos ocupados](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servicios_puertos.png?raw=true)
 
-3. Evaluar scripts en Python
+3. #### Conexion TCP (Cliente y Servidor en la misma maquina Lubuntu)
 
 Se crea un archivo denominado **server.py**, en este caso el archivo se guarda en el directorio **/Documentos/server**
 ```
 cd Documentos/
-mkdir server
-cd server/
+mkdir serverTCP
+cd serverTCP/
 touch server.py
 ```
 Dentro del archivo **server.py** de escribe el siguiente codigo
@@ -108,11 +108,154 @@ finally:
    sock.close()
 ```
 
-Dentro del directorio **/Documentos/server** ejecutamos el archivo **server.py** `python3 server.py` y luego el archivo **client.py** `python3 client.py`
+Dentro del directorio **/Documentos/server** se ejecuta el archivo **server.py** `python3 server.py` y luego el archivo **client.py** `python3 client.py`
 
-[Ver imagen: conexion servidor-cliente](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servidor_cliente.png?raw=true)
+![Ver imagen: conexion TCP](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/tcp.png?raw=true)
 
 Al ejecutar el comando `lsof -i -P -n` se puede observar que el puerto **10000** que se utilizo en la conexion servidor-cliente esta usado.
 
-[Ver imagen: puerto 10000 ocupado](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/puerto_10000.png?raw=true)
+![Ver imagen: puerto 10000 ocupado](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/puerto_10000.png?raw=true)
 
+4. #### Conexion UDP (Cliente y Servidor en la misma maquina Lubuntu)
+
+Se crea un archivo denominado **server.py**, en este caso el archivo se guarda en el directorio **/Documentos/serverUDP**. Este archivo tendra el siguiente contenido
+```
+import socket
+import sys
+
+# Create a UDP socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+# Bind the socket to the port
+server_address = ('localhost', 10000)
+print('starting up on {} port {}'.format(*server_address))
+sock.bind(server_address)
+
+while True:
+    print('\nwaiting to receive message')
+    data, address = sock.recvfrom(4096)
+
+    print('received {} bytes from {}'.format(
+        len(data), address))
+    print(data)
+
+    if data:
+        sent = sock.sendto(data, address)
+        print('sent {} bytes back to {}'.format(
+            sent, address))
+```
+Dentro del directorio **/Documentos/serverUDP** se crea un nuevo archivo denominado **client.py**, en el cual se tiene el siguiente codigo
+```
+import socket
+import sys
+
+# Create a UDP socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+server_address = ('localhost', 10000)
+message = b'This is the message.  It will be repeated.'
+
+try:
+
+    # Send data
+    print('sending {!r}'.format(message))
+    sent = sock.sendto(message, server_address)
+
+    # Receive response
+    print('waiting to receive')
+    data, server = sock.recvfrom(4096)
+    print('received {!r}'.format(data))
+
+finally:
+    print('closing socket')
+    sock.close()
+```
+
+Dentro del directorio **/Documentos/serverUDP** se ejecuta el archivo **server.py** `python3 server.py` y luego el archivo **client.py** `python3 client.py`
+
+![Ver imagen: conexion UDP](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/udp.png?raw=true)
+
+Al ejecutar el comando `lsof -i -P -n` se puede observar que el puerto **10000** que se utilizo en la conexion servidor-cliente esta usado.
+
+
+![Ver imagen: puerto 10000 ocupado](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/puerto_10000UDP.png?raw=true)
+
+5. #### Conexion TCP (Cliente Windows y servidor Lubuntu)
+
+En este caso el servidor esta en la maquina Lubuntu, por lo tanto  se utiliza el mismo archivo **server.py** del caso de TCP. Por otro lado para el cliente se crea un archivo **cliente.py** en la maquina nativa Windows, en el cual se tiene el siguiente codigo
+```
+import socket
+import sys
+
+# Create a TCP/IP socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect the socket to the port where the server is listening
+server_address = ('192.168.20.194', 10000)
+print('connecting to {} port {}'.format(*server_address))
+sock.connect(server_address)
+
+try:
+
+    # Send data
+    message = b'Conectandome desde Windows Client'
+    print('sending {!r}'.format(message))
+    sock.sendall(message)
+
+    # Look for the response
+    amount_received = 0
+    amount_expected = len(message)
+
+    while amount_received < amount_expected:
+        data = sock.recv(16)
+        amount_received += len(data)
+        print('received {!r}'.format(data))
+
+finally:
+    print('closing socket')
+    sock.close()
+```
+
+Se ejecuta el archivo **server.py** `python3 server.py` en la maquina Lubuntu y luego el archivo **cliente.py** en Windows
+
+![Ver imagen: conexion TCP desde diferentes maquinas](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/tcpWindows.png?raw=true)
+
+6. #### Conexion UDP (Cliente Windows y servidor Lubuntu)
+
+En este caso el servidor esta en la maquina Lubuntu, por lo tanto  se utiliza el mismo archivo **server.py** del caso de UDP. Por otro lado para el cliente se crea un archivo **cliente.py** en la maquina nativa Windows, en el cual se tiene el siguiente codigo
+```
+import socket
+import sys
+
+# Create a TCP/IP socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect the socket to the port where the server is listening
+server_address = ('192.168.20.194', 10000)
+print('connecting to {} port {}'.format(*server_address))
+sock.connect(server_address)
+
+try:
+
+    # Send data
+    message = b'Conectandome desde Windows Client'
+    print('sending {!r}'.format(message))
+    sock.sendall(message)
+
+    # Look for the response
+    amount_received = 0
+    amount_expected = len(message)
+
+    while amount_received < amount_expected:
+        data = sock.recv(16)
+        amount_received += len(data)
+        print('received {!r}'.format(data))
+
+finally:
+    print('closing socket')
+    sock.close()
+```
+
+Se ejecuta el archivo **server.py** `python3 server.py` en la maquina Lubuntu y luego el archivo **client.py** en Windows
+
+![Ver imagen: conexion TCP desde diferentes maquinas](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/udpWindows.png?raw=true)
