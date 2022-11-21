@@ -17,15 +17,13 @@ Para probar la correcta instalacioon de docker se hace una pequeña prueba media
 ```
 sudo docker run hello-world
 ```
-[Ver imagen Hello World](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/hello-world.png?raw=true)
+[Ver imagen Hello World](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servicios-puertos.png?raw=true)
 
 ## 3. Reconocimiento de herramientas de red
 ### Prerequisitos
 - Tener la configuracion de red de la maquina virtual en **adaptador puente**.
-- Instalar las herramientas de red mediante el comando:
-```
-sudo apt install net-tools
-```
+- Instalar las herramientas de red mediante el comando `sudo apt install net-tools`
+- Instalar las herramientas **lsof** mediante el comando `sudo apt install lsof`
 
 ### Desarrollo
 1. Se identifica la configuración de red por medio del comando:
@@ -41,3 +39,4 @@ ss | grep containerd
 ```
 netstat | grep containerd
 ```
+[Ver imagen de servicios y puertos ocupados](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/servicios_puertos.png?raw=true)
