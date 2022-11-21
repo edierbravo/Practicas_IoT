@@ -22,8 +22,9 @@ sudo docker run hello-world
 ## 3. Reconocimiento de herramientas de red
 ### Prerequisitos
 - Tener la configuracion de red de la maquina virtual en **adaptador puente**.
-- Instalar las herramientas de red mediante el comando `sudo apt install net-tools`
-- Instalar las herramientas **lsof** mediante el comando `sudo apt install lsof`
+- Instalar las herramientas de red  `sudo apt install net-tools`
+- Instalar las herramientas **lsof**  `sudo apt-get install lsof`
+- (Opcional) Instalar el gestor de archivos **gedit** `sudo apt-get install gedit`
 
 ### Desarrollo
 1. Se identifica la configuración de red por medio del comando:
@@ -32,11 +33,50 @@ ifconfig
 ```
 [Ver imagen ifconfig](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/ifconfig.png?raw=true)
 
-2. Se Identifican los servicios y puertos ocupados en el sistema respectivamente con los comandos
+2. Se Identifican los servicios y puertos ocupados en el sistema mediante los comandos
 ```
 ss | grep containerd
-```
-```
 netstat | grep containerd
+lsof | grep containerd
 ```
-[Ver imagen de servicios y puertos ocupados](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/servicios_puertos.png?raw=true)
+[Ver imagen de servicios y puertos ocupados](https://github.com/edierbra/Practicas_IoT/blob/main/Practica_1/Images/servicios_puertos.png?raw=true)
+
+3. Evaluar scripts en Python
+
+Se crea un archivo denominado **server.py**, en este caso se guarda el archivo en el directorio **/Documentos/server**
+```
+cd Documentos/
+mkdir server
+cd server/
+touch server.py
+```
+Dentro de este archivo de escribe el siguiente codigo
+```
+import socket
+import sys
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+server_address = ('0.0.0.0', 10000)
+print("Iniciando servidor...")
+sock.bind(server_address)
+
+sock.listen(1)
+
+while True:
+    print("Esperando por una conexion")
+    connection, client_address = sock.accept()
+    try:
+        print("Conectando desde: ", client_address)
+        while True:
+            data = connection.recv(16)
+            print('Recibido {!r}'.format(data))
+            if data:
+                print("Enviando datos de regreso")
+                connection.sendall(data)
+            else:
+                print("No hay datos desde el cliente", client_address)
+                break
+    finally:
+        connection.close()
+```
