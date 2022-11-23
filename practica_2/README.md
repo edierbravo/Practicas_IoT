@@ -331,23 +331,23 @@ export class AppController {
 
 Para comprobar el correcto funcionamiento del servidor se usa la herramienta **Postman**.
 
-**Metodo GET**
+**Metodo GET** (Consultar reservas de vuelos)
 
 ![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_2/Images/get.png?raw=true)
 
-**Metodo POST**
+**Metodo POST** (Crear una nueva reserva)
 
 ![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_2/Images/post.png?raw=true)
 
-**Metodo PUT**
+**Metodo PUT** (Actualiza una reserva)
 
 ![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_2/Images/put.png?raw=true)
 
-**Metodo PATCH**
+**Metodo PATCH** (Modificar cantidad de personas de una reserva)
 
 ![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_2/Images/patch.png?raw=true)
 
-**Metodo DELETE**
+**Metodo DELETE** (Eliminar una reserva)
 
 ![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_2/Images/delete.png?raw=true)
 
