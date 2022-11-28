@@ -1,10 +1,9 @@
 # Practicas IoT
+**Por** *Edier Bravo*
 
 ## Contenido
 
-1. [Practica 1]()
-2. [Practica 2]()
-3. [Practica 3]()
-4. [Practica 4]()
- 
-**Por** *Edier Bravo*
+1. [Link Practica 1](https://github.com/edierbra/Practicas_IoT/tree/practica1)
+2. [Link Practica 2]()
+3. [Link Practica 3]()
+4. [Link Practica 4]()
