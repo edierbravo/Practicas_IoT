@@ -302,20 +302,59 @@ Acontinuacion se hara la implementacion de los diferentes metodos mediante la he
 
 **Metodo GET** (Consultar tiquetes )
 
-![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/get.png?raw=true)
+Implementando Metodo GET en la herramienta Postman.
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/get0.png?raw=true)
+
+En la siguiente imagen observamos los datos en la base de datos MongoDB, en la cual se tienen 8 registros.
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/getdb.png?raw=true)
 
 **Metodo POST** (Crear un tiquete)
 
-![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/post.png?raw=true)
+Implementando Metodo POST en la herramienta Postman.
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/post0.png?raw=true)
+
+Acontinuacion se observa que se agrego un nuevo tiquete a la base de datos mongoDB.
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/post0db.png?raw=true)
 
 **Metodo PUT** (Actualiza un tiquete)
 
-![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/put.png?raw=true)
+El primer registro en al base de datos es:
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/putdb1.png?raw=true)
+
+
+Se implementa el metodo PUT en la herramienta MongoDB.
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/put2.png?raw=true)
+
+Acontinuacion se observa que el primer registro en la base de datos fue reemplazado por el nuevo registro.
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/putdb3.png?raw=true)
 
 **Metodo PATCH** (Modificar la fecha de regreso del tiquete)
 
-![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/patch.png?raw=true)
+El primer registro en la base de datos es.
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/patchdb1.png?raw=true)
+
+Se ejecuta el metodo PATCH en el cual se quiere cambiar la fecha de retorno de dicho tiquete.
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/patch4.png?raw=true)
+
+Acontinuacion se observa en la base de datos que dicho cambio fue realizado correctamente.
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/patchdb3.png?raw=true)
 
 **Metodo DELETE** (Eliminar un tiquete)
 
-![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/delete.png?raw=true)
+Acontinuacion se ejecuta el Metodo DELETE, con el fin de eliminar el primer registro de la base de datos.
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/delete01.png?raw=true)
+
+En la siguiente imagen se puede obserbar que el primer registro fue eliminado.
+
+![Ver imagen](https://github.com/edierbra/Practicas_IoT/blob/main/practica_4/images/delete02.png?raw=true)
